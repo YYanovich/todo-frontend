@@ -22,10 +22,14 @@ const initialState: TodoState = {
   error: null,
 };
 
+// Use Vite env variable for API base (set VITE_API_URL in deployment), fallback to localhost for local dev
+const API_BASE =
+  (import.meta.env.VITE_API_URL as string) || "http://localhost:5003";
+
 export const fetchTodos = createAsyncThunk(
   "todos/fetchTodos",
   async ({ page, limit }: { page: number; limit: number }) => {
-    const response = await axios.get("http://localhost:5003/api/todos", {
+    const response = await axios.get(`${API_BASE}/api/todos`, {
       params: { page, limit },
     });
     return response.data;
@@ -35,10 +39,7 @@ export const fetchTodos = createAsyncThunk(
 export const addTodo = createAsyncThunk(
   "todos/addTodo",
   async (newTodo: Omit<ITODO, "id">) => {
-    const response = await axios.post(
-      "http://localhost:5003/api/todos",
-      newTodo
-    );
+    const response = await axios.post(`${API_BASE}/api/todos`, newTodo);
     return response.data;
   }
 );
@@ -47,7 +48,7 @@ export const updateTodo = createAsyncThunk(
   "todos/updateTodo",
   async (updatedTodo: ITODO) => {
     const response = await axios.patch(
-      `http://localhost:5003/api/todos/${updatedTodo.id}`,
+      `${API_BASE}/api/todos/${updatedTodo.id}`,
       updatedTodo
     );
     return response.data;
@@ -57,7 +58,7 @@ export const updateTodo = createAsyncThunk(
 export const deleteTodo = createAsyncThunk(
   "todos/deleteTodo",
   async (id: string) => {
-    await axios.delete(`http://localhost:5003/api/todos/${id}`);
+    await axios.delete(`${API_BASE}/api/todos/${id}`);
     return id;
   }
 );
