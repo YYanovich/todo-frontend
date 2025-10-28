@@ -4,6 +4,12 @@ Overview
 
 This repository contains the frontend for a simple TODO application built with Vite, React, and TypeScript. It demonstrates a small, production-minded architecture using Redux Toolkit for state management and Axios for HTTP.
 
+![alt text](image.png)
+
+![alt text](image-1.png)
+
+![alt text](image-2.png)
+
 Tech stack
 
 - Vite
